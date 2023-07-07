@@ -4,7 +4,6 @@
       <el-container style="height: 100%; " id="containerNav">
           <el-aside width="200rpx" style="background-color: #03152A;" id="asideNav">
               <el-menu
-              default-active="1-1"
               class="el-menu-vertical-demo"
               background-color="#03152A"
               text-color="rgba(255,255,255,.7)"

@@ -50,8 +50,10 @@
             </el-table-column>
         </el-table>
         <el-pagination
+            @current-change="handleCurrentChange" 
             background
             layout="prev, pager, next"
+            :page-size="10"
             :total="1000">
         </el-pagination>
 
@@ -276,6 +278,9 @@ export default {
       input: '',
       tableData: [],
 
+      //分页
+      pageSize:10,  //默认10条
+
       // 添加对话框
       insertDialogFormVisible: false,
       // 编辑对话框
@@ -314,17 +319,17 @@ export default {
     }
   },
   created () {
-    this.findAll()
+    this.findAll(1)
   },
   methods: {
 
-  findAll () {
+    findAll (currentPage) {
     const that = this;
     const gtoken = JSON.parse(localStorage.getItem('token')) 
     const config = {
     params:{
-      current:1,
-      size:10,
+      current:currentPage,
+      size:this.pageSize,
       keyword:''
     },
     headers: {
@@ -353,6 +358,12 @@ export default {
         });          
     });
   },
+
+    handleCurrentChange(val) {
+        console.log('当前页: '+val);
+        this.findAll(val);
+      },
+
 
   getInfoById (id) {
     const that = this;
@@ -392,7 +403,7 @@ export default {
         }
       };
     if (this.input === '') {
-      this.findAll()
+      this.findAll(1)
     } else {
       this.$http.get(
       '/elderly/page',config
@@ -464,7 +475,7 @@ export default {
           type: 'success',
           message: '添加成功'
         });
-        this.findAll()
+        this.findAll(1)
       }else{
         this.$message({
           type: 'error',
@@ -522,7 +533,7 @@ export default {
           type: 'success',
           message: '修改成功'
         });
-        this.findAll()
+        this.findAll(1)
       }else{
         this.$message({
           type: 'error',
@@ -559,7 +570,7 @@ export default {
           message: '删除成功!'
         });
         // 发请求重新获取数据
-        this.findAll()
+        this.findAll(1)
         }else{
           this.$message({
           type: 'error',
