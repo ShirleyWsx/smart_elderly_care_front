@@ -1,7 +1,5 @@
 <template>
-  <el-dialog title="修改密码" width="580px" :visible.sync="visible" destroy-on-close @close="closeCallback">
-<!--    <div class="card">-->
-<!--      <p class="title"><i class="fa fa-th-large fa-lg"></i>修改密码</p>-->
+  <el-dialog title="修改密码" width="580px" :visible.sync="visible" destroy-on-close @close="closeCallback" >
       <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
         <el-form-item label="原密码" prop="oldPassword">
           <el-input type="password" v-model="ruleForm2.oldPassword" autocomplete="off"></el-input>
@@ -17,12 +15,10 @@
           <el-button @click="resetForm('ruleForm2')">重置</el-button>
         </el-form-item>
       </el-form>
-<!--    </div>-->
   </el-dialog>
 </template>
 
 <script>
-import Cookies from 'js-cookie'
 export default {
   name: 'editPassword',
   props: {
@@ -35,8 +31,8 @@ export default {
     const validatePass = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入密码'))
-      } else if (value.toString().length < 6) {
-        callback(new Error('密码长度不能低于6位'))
+      } else if (value.toString().length < 2) {
+        callback(new Error('密码长度不能低于2位'))
       } else {
         if (this.ruleForm2.checkPass !== '') {
           this.$refs.ruleForm2.validateField('checkPass')
@@ -47,8 +43,8 @@ export default {
     const validatePass2 = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请再次输入密码'))
-      } else if (value.toString().length < 6) {
-        callback(new Error('密码长度不能低于6位'))
+      } else if (value.toString().length < 2) {
+        callback(new Error('密码长度不能低于2位'))
       } else if (value !== this.ruleForm2.password) {
         callback(new Error('两次输入密码不一致!'))
       } else {
@@ -79,35 +75,65 @@ export default {
     closeCallback () {
       this.$emit('editPwdCallback')
     },
+
     submitForm (formName) {
+      const gtoken = JSON.parse(localStorage.getItem('token')) // 将此处替换为你的实际 token,记得处理json格式数据中的转义符反斜杠
+      console.log(gtoken);
+      const config = {
+      headers: {
+        token:gtoken
+          }
+        };
       const that = this
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.$request.fetchEditPassword({
-            oldPassword: that.ruleForm2.oldPassword,
-            newPassword: that.ruleForm2.password
-          }).then((res) => {
-            that.$message({
-              showClose: true,
-              message: res.data.message,
-              type: 'success'
-            })
-            setTimeout(function () {
-              Cookies.remove('access_token')
-              location.reload()
-            }, 3000)
-          }).catch((err) => {
-            that.$message({
-              showClose: true,
-              message: err.data.message,
-              type: 'error'
-            })
-          })
+          this.$http.put("/user/pwd",{
+            "username": localStorage.getItem('username'),
+            "password": that.ruleForm2.oldPassword,
+            "newPassword": that.ruleForm2.password
+          },config
+      ).then((response) => {
+        if (response.data.code === 1) {
+          this.$message({
+            type: 'success',
+            message: '密码修改成功'
+          });
+          that.visible=false
         } else {
-          console.log('error submit!!')
-          return false
+          this.$message({
+            type: 'error',
+            message: '修改失败'
+          });
         }
       })
+
+        //   this.$request.fetchEditPassword({
+        //     oldPassword: that.ruleForm2.oldPassword,
+        //     newPassword: that.ruleForm2.password
+        //   }).then((res) => {
+        //     that.$message({
+        //       showClose: true,
+        //       message: res.data.message,
+        //       type: 'success'
+        //     })
+        //     setTimeout(function () {
+        //       Cookies.remove('access_token')
+        //       location.reload()
+        //     }, 3000)
+        //   }).catch((err) => {
+        //     that.$message({
+        //       showClose: true,
+        //       message: err.data.message,
+        //       type: 'error'
+        //     })
+        //   })
+        // } else {
+        //   console.log('error submit!!')
+        //   return false
+        // }
+      
+    }
+  })
     },
     resetForm (formName) {
       this.$refs[formName].resetFields()

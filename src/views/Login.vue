@@ -24,10 +24,10 @@
             <!-- 密码框和用户名框 -->
             <div v-show="isShow" class="pwdArea">
                <div style="flex: 1;justify-content: center;display: flex;align-items: center">
-                   <el-input class="username" v-model="loginUser.name" style="width: 165px"  placeholder="用户名"></el-input>
+                   <el-input class="username" v-model="loginForm.username" style="width: 165px"  placeholder="用户名"></el-input>
                </div>
                 <div style="flex: 1;justify-content: center;display: flex;align-items: center">
-                    <el-input placeholder="密码"  v-model="loginUser.password" style="width: 165px" show-password></el-input>
+                    <el-input placeholder="密码"  v-model="loginForm.password" style="width: 165px" show-password></el-input>
                 </div>
             </div>
             </transition>
@@ -169,16 +169,15 @@
 
 <script>
 import 'animate.css';
-import { Axios as request } from "axios";
 export default {
 
   name: 'Login',
   data () {
     return {
       // 看看用不用转成用户对象
-      loginUser: {
-        name: "",
-        password: ""
+      loginForm: {
+        username: '',
+        password: ''
       },
 
       admins: {},
@@ -221,20 +220,25 @@ export default {
     },
     // 用户登录
     UserLogin () {
-      this.$router.push("/index")
-      // this.request.post("http://localhost:9090/user/login", this.loginUser).then(res => {
-      //   if (res.code === "200") {
-      //     localStorage.setItem("user", JSON.stringify(res.data))
-      //     this.$message.success("登陆成功！")
-      //     this.$router.push("/index")
-      //   } else if (res.code === "400") {
-      //     this.$message.warning(res.msg)
-      //   } else if (res.code === "401") {
-      //     this.$message.error(res.msg)
-      //   } else {
-      //     this.$message.error("用户名或密码错误！")
-      //   }
-      // })
+      this.$http.post(
+        "/user/login",
+        {"username": this.loginForm.username, "password": this.loginForm.password }
+      ).then((response) => {
+        if (response.data.code === 1) {
+          this.$message({
+            type: 'success',
+            message: '登录成功'
+          });
+          localStorage.setItem("username", this.loginForm.username)
+          localStorage.setItem("token", JSON.stringify(response.data.data.token))
+          this.$router.push("/index")
+        } else {
+          this.$message({
+            type: 'error',
+            message: '登录失败'
+          });
+        }
+      })
     },
     // 加载管理员信息
     loadInfoOfAdmin () {

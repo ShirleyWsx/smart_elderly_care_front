@@ -11,6 +11,7 @@ import VolunteerReport from '../views/Volunteer/VolunteerReport.vue'
 import ElderInfo from '../views/Elder/ElderInfo.vue'
 import ElderPortrait from '../views/Elder/ElderPortrait.vue'
 import ElderReport from '../views/Elder/ElderReport.vue'
+import EventInfo from '../views/Event/EventInfo.vue'
 
 Vue.use(VueRouter)
 
@@ -81,6 +82,11 @@ const routes = [
         path: '/elderReport',
         name: '实时报表',
         component: ElderReport
+      },
+      {
+        path: '/eventInfo',
+        name: '事件信息',
+        component: EventInfo
       }
     ]
   },

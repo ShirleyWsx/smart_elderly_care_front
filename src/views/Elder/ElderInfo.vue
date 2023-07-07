@@ -20,29 +20,30 @@
 
         <el-table :data="tableData" v-horizontal-scroll="'always'"
                   style="width: 100%"
-                  :default-sort = "{prop: 'user_id', order: 'descending'}">
-            <el-table-column prop="user_id" label="编号" sortable width="100" header-align="center" align="center">
+                  :default-sort = "{prop: 'elderlyId', order: 'descending'}">
+            <el-table-column prop="elderlyId" label="编号" sortable width="105" header-align="center" align="center">
             </el-table-column>
-            <el-table-column prop="name" label="姓名" sortable width="120" header-align="center" align="center">
+            <el-table-column prop="elderlyName" label="姓名" width="90" header-align="center" align="center">
             </el-table-column>
-            <el-table-column prop="gender" label="性别" width="60" header-align="center" align="center">
+            <el-table-column prop="gender" label="性别" width="70" header-align="center" align="center">
             </el-table-column>
-            <el-table-column prop="house" label="房间号" sortable width="100" header-align="center" align="center">
+            <el-table-column prop="idCard" label="身份证号" width="140" header-align="center" align="center">
             </el-table-column>
-            <el-table-column prop="date" label="入园日期" width="100" header-align="center" align="center">
+            <el-table-column prop="phone" label="电话" width="120" header-align="center" align="center">
             </el-table-column>
-            <el-table-column prop="IDcard" label="身份证号" width="120" header-align="center" align="center">
+            <el-table-column prop="birthday" label="出生日期" width="100" header-align="center" align="center">
             </el-table-column>
-            <el-table-column prop="age" label="年龄" width="100" header-align="center" align="center">
+            <el-table-column prop="checkinDate" label="入养老院日期" width="110" header-align="center" align="center">
             </el-table-column>
-            <el-table-column prop="health" label="健康状况" width="100" header-align="center" align="center">
+            <el-table-column prop="roomNumber" label="房间号" width="70" header-align="center" align="center">
             </el-table-column>
-            <el-table-column prop="area_name" label="管理区域" sortable width="100" header-align="center" align="center">
+            <el-table-column prop="healthState" label="健康状况" width="80" header-align="center" align="center">
             </el-table-column>
-            <el-table-column prop="status" label="身份" :formatter="statusFormatter" sortable width="90" header-align="center" align="center">
+            <el-table-column prop="checkoutDate" label="离开养老院日期" width="120" header-align="center" align="center">
             </el-table-column>
             <el-table-column prop="operations" label="操作" header-align="center" align="center">
                 <template slot-scope="scope">
+                    <el-button type="info" size="small" @click="openDetailDialog(scope.$index, scope.row)">查看</el-button>
                     <el-button type="success" size="small" @click="openModifyDialog(scope.$index, scope.row)">修改</el-button>
                     <el-button type="danger" size="small" @click="deleteInfo(scope.$index, scope.row)">删除</el-button>
                 </template>
@@ -55,44 +56,64 @@
         </el-pagination>
 
         <!-- 添加记录对话框 -->
-        <el-dialog title="添加老人" :visible.sync="insertDialogFormVisible" width="400px">
+        <el-dialog title="添加老年人" :visible.sync="insertDialogFormVisible" width="400px">
             <el-form :model="form">
-              <el-form-item label="编号" :label-width="formLabelWidth">
-                    <el-input v-model="form.user_id" autocomplete="off" disabled></el-input>
-                </el-form-item>
                 <el-form-item label="姓名" :label-width="formLabelWidth">
-                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                    <el-input v-model="form.elderlyName" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="性别" :label-width="formLabelWidth">
                     <el-input v-model="form.gender" autocomplete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="房间号" :label-width="formLabelWidth">
-                    <el-input v-model="form.house" autocomplete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="入园日期" :label-width="formLabelWidth">
-                    <el-input v-model="form.date" autocomplete="off"></el-input>
+                <el-form-item label="电话" :label-width="formLabelWidth">
+                    <el-input v-model="form.phone" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="身份证号" :label-width="formLabelWidth">
-                    <el-input v-model="form.IDcard" autocomplete="off"></el-input>
+                    <el-input v-model="form.idCard" autocomplete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="年龄" :label-width="formLabelWidth">
-                    <el-input v-model="form.age" autocomplete="off"></el-input>
+                <el-form-item label="出生日期" :label-width="formLabelWidth">
+                    <el-input v-model="form.birthday" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="入养老院日期" :label-width="formLabelWidth">
+                    <el-input v-model="form.checkinDate" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="离开养老院日期" :label-width="formLabelWidth">
+                    <el-input v-model="form.checkoutDate" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="图像目录" :label-width="formLabelWidth">
+                    <el-input v-model="form.imgsetDir" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="头像路径" :label-width="formLabelWidth">
+                    <el-input v-model="form.profilePhoto" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="房间号" :label-width="formLabelWidth">
+                    <el-input v-model="form.roomNumber" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="第一监护人姓名" :label-width="formLabelWidth">
+                    <el-input v-model="form.firstGuardianName" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="与第一监护人关系" :label-width="formLabelWidth">
+                    <el-input v-model="form.firstGuardianRelationship" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="第一监护人电话" :label-width="formLabelWidth">
+                    <el-input v-model="form.firstGuardianPhone" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="第一监护人微信" :label-width="formLabelWidth">
+                    <el-input v-model="form.firstGuardianWechat" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="第二监护人姓名" :label-width="formLabelWidth">
+                    <el-input v-model="form.secondGuardianName" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="与第二监护人关系" :label-width="formLabelWidth">
+                    <el-input v-model="form.secondGuardianRelationship" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="第二监护人电话" :label-width="formLabelWidth">
+                    <el-input v-model="form.secondGuardianPhone" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="第二监护人微信" :label-width="formLabelWidth">
+                    <el-input v-model="form.secondGuardianWechat" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="健康状况" :label-width="formLabelWidth">
-                    <el-input v-model="form.health" autocomplete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="管理区域" :label-width="formLabelWidth">
-                    <el-select v-model="form.area_id" placeholder="请选择该管理员的管理区域"
-                     @visible-change="findAllAreas" style="width: 280px">
-                        <el-option v-for="area in this.allAreas" :key="area"
-                         :label=area.area_name :value=area.area_id></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="身份" :label-width="formLabelWidth">
-                    <el-select v-model="form.status" placeholder="请选择管理员身份" style="width: 280px">
-                        <el-option label="普通管理员" value="0"></el-option>
-                        <el-option label="超级管理员" value="1"></el-option>
-                    </el-select>
+                    <el-input v-model="form.healthState" autocomplete="off"></el-input>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -103,37 +124,66 @@
 
         <!-- 编辑记录对话框 -->
         <el-dialog title="编辑信息" :visible.sync="modifyDialogFormVisible" width="400px">
-            <el-form :model="form">
-                <el-form-item label="编号" :label-width="formLabelWidth">
-                    <el-input v-model="form.user_id" autocomplete="off" disabled></el-input>
+          <el-form :model="form">
+              <el-form-item label="编号" :label-width="formLabelWidth">
+                    <el-input v-model="form.elderlyId" autocomplete="off" disabled></el-input>
                 </el-form-item>
                 <el-form-item label="姓名" :label-width="formLabelWidth">
-                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                    <el-input v-model="form.elderlyName" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="性别" :label-width="formLabelWidth">
                     <el-input v-model="form.gender" autocomplete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="房间号" :label-width="formLabelWidth">
-                    <el-input v-model="form.house" autocomplete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="入园日期" :label-width="formLabelWidth">
-                    <el-input v-model="form.date" autocomplete="off"></el-input>
+                <el-form-item label="电话" :label-width="formLabelWidth">
+                    <el-input v-model="form.phone" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="身份证号" :label-width="formLabelWidth">
-                    <el-input v-model="form.IDcard" autocomplete="off"></el-input>
+                    <el-input v-model="form.idCard" autocomplete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="年龄" :label-width="formLabelWidth">
-                    <el-input v-model="form.age" autocomplete="off"></el-input>
+                <el-form-item label="出生日期" :label-width="formLabelWidth">
+                    <el-input v-model="form.birthday" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="入养老院日期" :label-width="formLabelWidth">
+                    <el-input v-model="form.checkinDate" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="离开养老院日期" :label-width="formLabelWidth">
+                    <el-input v-model="form.checkoutDate" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="图像目录" :label-width="formLabelWidth">
+                    <el-input v-model="form.imgsetDir" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="头像路径" :label-width="formLabelWidth">
+                    <el-input v-model="form.profilePhoto" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="房间号" :label-width="formLabelWidth">
+                    <el-input v-model="form.roomNumber" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="第一监护人姓名" :label-width="formLabelWidth">
+                    <el-input v-model="form.firstGuardianName" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="与第一监护人关系" :label-width="formLabelWidth">
+                    <el-input v-model="form.firstGuardianRelationship" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="第一监护人电话" :label-width="formLabelWidth">
+                    <el-input v-model="form.firstGuardianPhone" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="第一监护人微信" :label-width="formLabelWidth">
+                    <el-input v-model="form.firstGuardianWechat" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="第二监护人姓名" :label-width="formLabelWidth">
+                    <el-input v-model="form.secondGuardianName" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="与第二监护人关系" :label-width="formLabelWidth">
+                    <el-input v-model="form.secondGuardianRelationship" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="第二监护人电话" :label-width="formLabelWidth">
+                    <el-input v-model="form.secondGuardianPhone" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="第二监护人微信" :label-width="formLabelWidth">
+                    <el-input v-model="form.secondGuardianWechat" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="健康状况" :label-width="formLabelWidth">
-                    <el-input v-model="form.health" autocomplete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="管理区域" :label-width="formLabelWidth">
-                    <el-select v-model="form.area_id" placeholder="请选择该管理员的管理区域"
-                     @visible-change="findAllAreas" style="width: 280px">
-                        <el-option v-for="area in this.allAreas" :key="area"
-                         :label=area.area_name :value=area.area_id></el-option>
-                    </el-select>
+                    <el-input v-model="form.healthState" autocomplete="off"></el-input>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -142,6 +192,71 @@
             </div>
         </el-dialog>
 
+            <!-- 详情对话框 -->
+          <el-dialog title="详细信息" :visible.sync="detailDialogFormVisible" width="400px">
+          <el-form :model="form">
+              <el-form-item label="编号" :label-width="formLabelWidth">
+                    <el-input v-model="form.elderlyId" autocomplete="off" readonly></el-input>
+                </el-form-item>
+                <el-form-item label="姓名" :label-width="formLabelWidth">
+                    <el-input v-model="form.elderlyName" autocomplete="off" readonly></el-input>
+                </el-form-item>
+                <el-form-item label="性别" :label-width="formLabelWidth">
+                    <el-input v-model="form.gender" autocomplete="off" readonly></el-input>
+                </el-form-item>
+                <el-form-item label="电话" :label-width="formLabelWidth">
+                    <el-input v-model="form.phone" autocomplete="off" readonly></el-input>
+                </el-form-item>
+                <el-form-item label="身份证号" :label-width="formLabelWidth">
+                    <el-input v-model="form.idCard" autocomplete="off" readonly></el-input>
+                </el-form-item>
+                <el-form-item label="出生日期" :label-width="formLabelWidth">
+                    <el-input v-model="form.birthday" autocomplete="off" readonly></el-input>
+                </el-form-item>
+                <el-form-item label="入养老院日期" :label-width="formLabelWidth">
+                    <el-input v-model="form.checkinDate" autocomplete="off" readonly></el-input>
+                </el-form-item>
+                <el-form-item label="离开养老院日期" :label-width="formLabelWidth">
+                    <el-input v-model="form.checkoutDate" autocomplete="off" readonly></el-input>
+                </el-form-item>
+                <el-form-item label="图像目录" :label-width="formLabelWidth">
+                    <el-input v-model="form.imgsetDir" autocomplete="off" readonly></el-input>
+                </el-form-item>
+                <el-form-item label="头像路径" :label-width="formLabelWidth">
+                    <el-input v-model="form.profilePhoto" autocomplete="off" readonly></el-input>
+                </el-form-item>
+                <el-form-item label="房间号" :label-width="formLabelWidth">
+                    <el-input v-model="form.roomNumber" autocomplete="off" readonly></el-input>
+                </el-form-item>
+                <el-form-item label="第一监护人姓名" :label-width="formLabelWidth">
+                    <el-input v-model="form.firstGuardianName" autocomplete="off" readonly></el-input>
+                </el-form-item>
+                <el-form-item label="与第一监护人关系" :label-width="formLabelWidth">
+                    <el-input v-model="form.firstGuardianRelationship" autocomplete="off" readonly></el-input>
+                </el-form-item>
+                <el-form-item label="第一监护人电话" :label-width="formLabelWidth">
+                    <el-input v-model="form.firstGuardianPhone" autocomplete="off" readonly></el-input>
+                </el-form-item>
+                <el-form-item label="第一监护人微信" :label-width="formLabelWidth">
+                    <el-input v-model="form.firstGuardianWechat" autocomplete="off" readonly></el-input>
+                </el-form-item>
+                <el-form-item label="第二监护人姓名" :label-width="formLabelWidth">
+                    <el-input v-model="form.secondGuardianName" autocomplete="off" readonly></el-input>
+                </el-form-item>
+                <el-form-item label="与第二监护人关系" :label-width="formLabelWidth">
+                    <el-input v-model="form.secondGuardianRelationship" autocomplete="off" readonly></el-input>
+                </el-form-item>
+                <el-form-item label="第二监护人电话" :label-width="formLabelWidth">
+                    <el-input v-model="form.secondGuardianPhone" autocomplete="off" readonly></el-input>
+                </el-form-item>
+                <el-form-item label="第二监护人微信" :label-width="formLabelWidth">
+                    <el-input v-model="form.secondGuardianWechat" autocomplete="off" readonly></el-input>
+                </el-form-item>
+                <el-form-item label="健康状况" :label-width="formLabelWidth">
+                    <el-input v-model="form.healthState" autocomplete="off" readonly></el-input>
+                </el-form-item>
+            </el-form>
+        </el-dialog>
     </div>
 </template>
 
@@ -165,19 +280,32 @@ export default {
       insertDialogFormVisible: false,
       // 编辑对话框
       modifyDialogFormVisible: false,
+      //详情对话框
+      detailDialogFormVisible: false,
+
       modifyId: undefined,
 
       form: {
-        user_id: '',
-        open_id: '',
-        username: '',
-        password: '',
-        name: '',
+        elderlyId: '',
+        elderlyName: '',
         gender: '',
-        email: '',
-        area_id: '',
-        area_name: '',
-        status: ''
+        phone: '',
+        idCard: '',
+        birthday: '',
+        checkinDate: '',
+        checkoutDate: '',
+        imgsetDir:'',
+        profilePhoto:'',
+        roomNumber: '',
+        firstGuardianName:'',
+        firstGuardianRelationship:'',
+        firstGuardianPhone:'',
+        firstGuardianWechat:'',
+        secondGuardianName:'',
+        secondGuardianRelationship:'',
+        secondGuardianPhone:'',
+        secondGuardianWechat:'',
+        healthState: ''
       },
       formLabelWidth: '80px',
 
@@ -187,134 +315,265 @@ export default {
   },
   created () {
     this.findAll()
-    this.findAllAreas()
   },
   methods: {
-    areaFormatter (row, column) {
-      // this.$http.get(
-      //     "/area/findAll",
-      // ).then((response)=>{
-      //     console.log(response.data.data)
-      // })
-      return row.area_id
+
+  findAll () {
+    const that = this;
+    const gtoken = JSON.parse(localStorage.getItem('token')) 
+    const config = {
+    params:{
+      current:1,
+      size:10,
+      keyword:''
     },
-    statusFormatter (row, column) {
-      // return row.status
-      return row.status === 1 ? '超级管理员' : '普通管理员'
-    },
-    findAll () {
-      this.$http.get(
-        '/user/findAll'
-      ).then((response) => {
-        this.tableData = response.data.data
-        console.log(response)
-      })
-    },
-    findAllAreas () {
-      this.$http.get(
-        '/area/findAll'
-      ).then((response) => {
-        this.allAreas = response.data.data
-        console.log(response)
-      })
-    },
-    getInfoById (id) {
-      this.$http.get(
-        '/user/' + id
-      ).then((response) => {
-        // this.form = response.data.data
-        // console.log(response.data.data)
-        if (response.data.code === '1') {
-          this.form = response.data.data
-        } else {
-          this.form = {}
+    headers: {
+      token:gtoken
         }
-      })
-    },
-    getInfoByName () {
-      if (this.input === '') {
-        this.findAll()
+      };
+    this.$http.get(
+      '/elderly/page',config
+    ).then((response) => {
+      if (response.data.code === 1){
+        this.$message({
+          type: 'success',
+          message: '查询成功'
+        });
+        that.tableData = response.data.data.records    
+      }else{
+        this.$message({
+          type: 'error',
+          message: '查询失败'
+        });
+      }  
+    }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '网络问题，查询失败'
+        });          
+    });
+  },
+
+  getInfoById (id) {
+    const that = this;
+    const gtoken = JSON.parse(localStorage.getItem('token')) 
+    const config = {
+    headers: {
+      token:gtoken
+        }
+      };
+    this.$http.get(
+      '/elderly/' + id,config
+    ).then((response) => {
+      if (response.data.code === 1) {
+        that.form = response.data.data
       } else {
-        this.$http.get(
-          '/user?name=' + this.input
-        ).then((response) => {
-          // this.form = response.data.data
-          // console.log(response.data.data)
-          if (response.data.code === '1') {
-            this.tableData = response.data.data
-          } else {
-            this.tableData = []
-          }
-        })
+        that.form = {}
       }
+    }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '网络问题，加载失败'
+        });          
+    });
+  },
+  
+  getInfoByName () {
+    const that = this
+    const gtoken = JSON.parse(localStorage.getItem('token')) 
+    const config = {
+    params:{
+      current:'',
+      size:'',
+      keyword:this.input
     },
-    openInsertDialog () {
-      this.form = {}
-      this.insertDialogFormVisible = true
-    },
-    insertInfo () {
-      this.insertDialogFormVisible = false
-      this.$http.post(
-        '/user/',
-        this.form
-      ).then((response) => {
+    headers: {
+      token:gtoken
+        }
+      };
+    if (this.input === '') {
+      this.findAll()
+    } else {
+      this.$http.get(
+      '/elderly/page',config
+    ).then((response) => {
+      if (response.data.code === 1){
+        this.$message({
+          type: 'success',
+          message: '查询成功'
+        });
+        that.tableData = response.data.data.records    
+      }else{
+        this.$message({
+          type: 'error',
+          message: '查询失败'
+        });
+      }  
+    }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '网络问题，查询失败'
+        });          
+    });
+    }
+  },
+  openDetailDialog (index, row) {
+      this.detailDialogFormVisible = true
+      // 回显需要被修改的信息
+      this.getInfoById(row.elderlyId)
+  },
+  openInsertDialog () {
+    this.form = {}
+    this.insertDialogFormVisible = true
+  },
+  insertInfo () {
+    const that = this;
+    const gtoken = JSON.parse(localStorage.getItem('token')) 
+    const config = {
+    headers: {
+      token:gtoken
+        }
+      };
+    this.insertDialogFormVisible = false
+    this.$http.post(
+      '/elderly',{
+      elderlyName: that.form.elderlyName,
+      gender: that.form.gender,
+      phone: that.form.phone,
+      idCard: that.form.idCard,
+      birthday: that.form.birthday,
+      checkinDate: that.form.checkinDate,
+      checkoutDate: that.form.checkoutDate,
+      imgsetDir:that.form.imgsetDir,
+      profilePhoto:that.form.profilePhoto,
+      roomNumber: that.form.roomNumber,
+      firstGuardianName:that.form.firstGuardianName,
+      firstGuardianRelationship:that.form.firstGuardianRelationship,
+      firstGuardianPhone:that.form.firstGuardianPhone,
+      firstGuardianWechat:that.form.firstGuardianWechat,
+      secondGuardianName:that.form.secondGuardianName,
+      secondGuardianRelationship:that.form.secondGuardianRelationship,
+      secondGuardianPhone:that.form.secondGuardianPhone,
+      secondGuardianWechat:that.form.secondGuardianWechat,
+      healthState: that.form.healthState
+      },
+      config
+    ).then((response) => {
+      if (response.data.code === 1){
         this.$message({
           type: 'success',
           message: '添加成功'
-        })
-        // 发请求重新获取数据
+        });
         this.findAll()
-      })
-    },
-    openModifyDialog (index, row) {
+      }else{
+        this.$message({
+          type: 'error',
+          message: '添加失败'
+        });
+      }    
+    }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '网络问题，添加失败'
+        });          
+    });
+  },
+  openModifyDialog (index, row) {
       this.modifyDialogFormVisible = true
-      this.modifyId = row.user_id
       // 回显需要被修改的信息
-      this.getInfoById(row.user_id)
-    },
-    modifyInfo () {
-      this.modifyDialogFormVisible = false
-      // 发送请求
-      this.$http.put(
-        '/user/',
-        this.form
-      ).then((response) => {
+      this.getInfoById(row.elderlyId)
+  },
+  modifyInfo () {
+    this.modifyDialogFormVisible = false
+    const that = this;
+    const gtoken = JSON.parse(localStorage.getItem('token')) 
+    const config = {
+    headers: {
+      token:gtoken
+        }
+      };
+    this.$http.put(
+      '/elderly',{
+      elderlyId: that.form.elderlyId,
+      elderlyName: that.form.elderlyName,
+      gender: that.form.gender,
+      phone: that.form.phone,
+      idCard: that.form.idCard,
+      birthday: that.form.birthday,
+      checkinDate: that.form.checkinDate,
+      checkoutDate: that.form.checkoutDate,
+      imgsetDir:that.form.imgsetDir,
+      profilePhoto:that.form.profilePhoto,
+      roomNumber: that.form.roomNumber,
+      firstGuardianName:that.form.firstGuardianName,
+      firstGuardianRelationship:that.form.firstGuardianRelationship,
+      firstGuardianPhone:that.form.firstGuardianPhone,
+      firstGuardianWechat:that.form.firstGuardianWechat,
+      secondGuardianName:that.form.secondGuardianName,
+      secondGuardianRelationship:that.form.secondGuardianRelationship,
+      secondGuardianPhone:that.form.secondGuardianPhone,
+      secondGuardianWechat:that.form.secondGuardianWechat,
+      healthState: that.form.healthState
+      },
+      config
+    ).then((response) => {
+      if (response.data.code === 1){
         this.$message({
           type: 'success',
           message: '修改成功'
-        })
-        // 发请求重新获取数据
+        });
         this.findAll()
-      })
-    },
-    deleteInfo (index, row) {
-      // console.log(index)
-      // console.log(row)
-      // var delete_id = row.user_id
-      // console.log(delete_id)
-      this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        // 发送请求
-        this.$http.delete(
-          '/user/' + row.user_id
-        ).then((response) => {
-          this.$message({
-            type: 'success',
-            message: '删除成功!'
-          })
-          // 发请求重新获取数据
-          this.findAll()
-        })
-      }).catch(() => {
+      }else{
+        this.$message({
+          type: 'error',
+          message: '修改失败'
+        });
+      }    
+    }).catch(() => {
         this.$message({
           type: 'info',
-          message: '已取消删除'
-        })
+          message: '网络问题，修改失败'
+        });          
+    });
+  },
+
+  deleteInfo (index, row) {
+    const gtoken = JSON.parse(localStorage.getItem('token')) 
+    const config = {
+    headers: {
+      token:gtoken
+        }
+      };
+    this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning'
+    }).then(() => {
+      // 发送请求
+      this.$http.delete(
+        '/elderly/' + row.elderlyId,config
+      ).then((response) => {
+        if(response.data.code === 1) {
+          this.$message({
+          type: 'success',
+          message: '删除成功!'
+        });
+        // 发请求重新获取数据
+        this.findAll()
+        }else{
+          this.$message({
+          type: 'error',
+          message: '删除失败'
+        });
+        }
       })
-    }
+    }).catch(() => {
+      this.$message({
+        type: 'info',
+        message: '已取消删除'
+      })
+    })
+  }
   }
 }
 </script>
