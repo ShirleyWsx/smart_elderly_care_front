@@ -39,7 +39,7 @@
             </el-table-column>
             <el-table-column prop="healthState" label="健康状况" width="80" header-align="center" align="center">
             </el-table-column>
-            <el-table-column prop="checkoutDate" label="离开养老院日期" width="120" header-align="center" align="center">
+            <el-table-column prop="checkoutDate" label="离开养老院日期" width="100" header-align="center" align="center">
             </el-table-column>
             <el-table-column prop="operations" label="操作" header-align="center" align="center">
                 <template slot-scope="scope">

@@ -27,7 +27,7 @@
           </el-table-column>
           <el-table-column prop="gender" label="性别" width="70" header-align="center" align="center">
           </el-table-column>
-          <el-table-column prop="phone" label="电话"  header-align="center" align="center">
+          <el-table-column prop="phone" label="电话" width="150" header-align="center" align="center">
           </el-table-column>
           <el-table-column prop="idCard" label="身份证号" width="180" header-align="center" align="center">
           </el-table-column>

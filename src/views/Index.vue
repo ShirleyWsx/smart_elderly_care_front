@@ -60,9 +60,18 @@
                   <el-submenu index="5">
                       <template slot="title">
                           <i class="el-icon-setting"></i>
+                          <span slot="title">视频监控</span>
+                      </template>
+                      <el-menu-item @click="gotoCamera" index="5-1">查看视频</el-menu-item>
+                      <el-menu-item @click="gotoCameraThree" index="5-2">视频三</el-menu-item>
+                  </el-submenu>
+
+                  <el-submenu index="6">
+                      <template slot="title">
+                          <i class="el-icon-setting"></i>
                           <span slot="title">数据管理</span>
                       </template>
-                      <el-menu-item @click="gotoElderInfo" index="5-1">基本信息</el-menu-item>
+                      <el-menu-item @click="gotoElderInfo" index="6-1">基本信息</el-menu-item>
 
                   </el-submenu>
               </el-menu>
@@ -235,12 +244,17 @@ methods: {
   gotoAdminInfo () {
     this.$router.push('/adminInfo')
   },
+  
   gotoEventInfo(){
     this.$router.push('/eventInfo')
   },
 
   gotoCamera () {
     this.$router.push('/camera')
+  },
+
+  gotoCameraThree () {
+    this.$router.push('/cameraThree')
   },
 
   gotoSelectScene () {

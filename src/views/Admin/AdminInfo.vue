@@ -27,9 +27,9 @@
             </el-table-column>
             <el-table-column prop="gender" label="性别" width="60" header-align="center" align="center">
             </el-table-column>
-            <el-table-column prop="phone" label="电话" width="60" header-align="center" align="center">
+            <el-table-column prop="phone" label="电话" width="120" header-align="center" align="center">
             </el-table-column>
-            <el-table-column prop="idCard" label="身份证号" width="170" header-align="center" align="center">
+            <el-table-column prop="idCard" label="身份证号" width="180" header-align="center" align="center">
             </el-table-column>
             <el-table-column prop="birthday" label="出生日期" width="100" header-align="center" align="center">
             </el-table-column>

@@ -12,6 +12,9 @@ import ElderInfo from '../views/Elder/ElderInfo.vue'
 import ElderPortrait from '../views/Elder/ElderPortrait.vue'
 import ElderReport from '../views/Elder/ElderReport.vue'
 import EventInfo from '../views/Event/EventInfo.vue'
+import CameraThree from '../views/Video/CameraThree.vue'
+import Camera from '../views/Video/Camera.vue'
+
 
 Vue.use(VueRouter)
 
@@ -87,6 +90,16 @@ const routes = [
         path: '/eventInfo',
         name: '事件信息',
         component: EventInfo
+      },
+      {
+        path:'/cameraThree',
+        name:'视频三',
+        component:CameraThree
+      },
+      {
+        path:'/camera',
+        name:'查看视频',
+        component:Camera
       }
     ]
   },
