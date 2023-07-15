@@ -64,7 +64,8 @@
                     <el-input v-model="form.elderlyName" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="性别" :label-width="formLabelWidth">
-                    <el-input v-model="form.gender" autocomplete="off"></el-input>
+                  <el-radio v-model="form.gender" label="男">男</el-radio>
+                  <el-radio v-model="form.gender" label="女">女</el-radio>
                 </el-form-item>
                 <el-form-item label="电话" :label-width="formLabelWidth">
                     <el-input v-model="form.phone" autocomplete="off"></el-input>
@@ -73,19 +74,37 @@
                     <el-input v-model="form.idCard" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="出生日期" :label-width="formLabelWidth">
-                    <el-input v-model="form.birthday" autocomplete="off"></el-input>
+                    <el-date-picker v-model="form.birthday" type="date" placeholder="选择日期" value-format="yyyy-MM-dd" autocomplete="off"></el-date-picker>
                 </el-form-item>
                 <el-form-item label="入养老院日期" :label-width="formLabelWidth">
-                    <el-input v-model="form.checkinDate" autocomplete="off"></el-input>
+                    <el-date-picker v-model="form.checkinDate" type="date" placeholder="选择日期" value-format="yyyy-MM-dd" autocomplete="off"></el-date-picker>
                 </el-form-item>
                 <el-form-item label="离开养老院日期" :label-width="formLabelWidth">
-                    <el-input v-model="form.checkoutDate" autocomplete="off"></el-input>
+                    <el-date-picker v-model="form.checkoutDate" type="date" placeholder="选择日期" value-format="yyyy-MM-dd" autocomplete="off"></el-date-picker>
                 </el-form-item>
                 <el-form-item label="图像目录" :label-width="formLabelWidth">
                     <el-input v-model="form.imgsetDir" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="头像路径" :label-width="formLabelWidth">
                     <el-input v-model="form.profilePhoto" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="上传图像" :label-width="formLabelWidth">
+                  <div>
+                  <el-upload
+                  class="upload-demo"
+                  action
+                  :http-request="uploadFile"
+                  ref="upload"
+                  :auto-upload="false"
+                  :file-list="fileList"
+                  :show-file-list="true"
+                  :before-upload="handleBeforeUpload"
+                  :on-remove="handleRemove"
+                  style="margin-left: 5px; display:inline;font-size:14px;"
+                  >
+                  <el-button size="medium" type="primary" style="margin-top: 5px;margin-bottom: 5px;">选择文件</el-button>
+                  </el-upload>
+                  </div>
                 </el-form-item>
                 <el-form-item label="房间号" :label-width="formLabelWidth">
                     <el-input v-model="form.roomNumber" autocomplete="off"></el-input>
@@ -134,7 +153,8 @@
                     <el-input v-model="form.elderlyName" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="性别" :label-width="formLabelWidth">
-                    <el-input v-model="form.gender" autocomplete="off"></el-input>
+                  <el-radio v-model="form.gender" label="男">男</el-radio>
+                  <el-radio v-model="form.gender" label="女">女</el-radio>
                 </el-form-item>
                 <el-form-item label="电话" :label-width="formLabelWidth">
                     <el-input v-model="form.phone" autocomplete="off"></el-input>
@@ -143,19 +163,37 @@
                     <el-input v-model="form.idCard" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="出生日期" :label-width="formLabelWidth">
-                    <el-input v-model="form.birthday" autocomplete="off"></el-input>
+                    <el-date-picker v-model="form.birthday" type="date" placeholder="选择日期" value-format="yyyy-MM-dd" autocomplete="off"></el-date-picker>
                 </el-form-item>
                 <el-form-item label="入养老院日期" :label-width="formLabelWidth">
-                    <el-input v-model="form.checkinDate" autocomplete="off"></el-input>
+                    <el-date-picker v-model="form.checkinDate" type="date" placeholder="选择日期" value-format="yyyy-MM-dd" autocomplete="off"></el-date-picker>
                 </el-form-item>
                 <el-form-item label="离开养老院日期" :label-width="formLabelWidth">
-                    <el-input v-model="form.checkoutDate" autocomplete="off"></el-input>
+                    <el-date-picker v-model="form.checkoutDate" type="date" placeholder="选择日期" value-format="yyyy-MM-dd" autocomplete="off"></el-date-picker>
                 </el-form-item>
                 <el-form-item label="图像目录" :label-width="formLabelWidth">
                     <el-input v-model="form.imgsetDir" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="头像路径" :label-width="formLabelWidth">
                     <el-input v-model="form.profilePhoto" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="上传图像" :label-width="formLabelWidth">
+                  <div>
+                    <el-upload
+                    class="upload-demo"
+                    action
+                    :http-request="uploadFile"
+                    ref="uploadModify"
+                    :auto-upload="false"
+                    :file-list="fileList"
+                    :show-file-list="true"
+                    :before-upload="handleBeforeUpload"
+                    :on-remove="handleRemove"
+                    style="margin-left: 5px; display:inline;font-size:14px;"
+                    >
+                  <el-button size="medium" type="primary" style="margin-top: 5px;margin-bottom: 5px;">选择文件</el-button>
+                  </el-upload>
+                  </div>
                 </el-form-item>
                 <el-form-item label="房间号" :label-width="formLabelWidth">
                     <el-input v-model="form.roomNumber" autocomplete="off"></el-input>
@@ -221,6 +259,9 @@
                 <el-form-item label="离开养老院日期" :label-width="formLabelWidth">
                     <el-input v-model="form.checkoutDate" autocomplete="off" readonly></el-input>
                 </el-form-item>
+                <el-form-item label="头像" :label-width="formLabelWidth">
+                  <img :src="form.imageUrl" class="avatar">             
+                </el-form-item>
                 <el-form-item label="图像目录" :label-width="formLabelWidth">
                     <el-input v-model="form.imgsetDir" autocomplete="off" readonly></el-input>
                 </el-form-item>
@@ -263,10 +304,26 @@
 </template>
 
 <style>
-
+.el-upload-list__item-name{
+  display: none;
+}
+.avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
+  .spanname{
+    width: 100px;
+    height: 30px;
+    /* background: blue; */
+    position: absolute;
+    top: 75px;
+    left: 40px;
+  }
 </style>
 
 <script>
+  import axios from 'axios';
 export default {
   name: 'AlarmEvent',
   components: {
@@ -277,7 +334,10 @@ export default {
       // 搜索框输入的内容
       input: '',
       tableData: [],
-
+      //上传后的文件列表
+      fileList: [],
+      selectedFile:null,
+      
       //分页
       pageSize:10,  //默认10条
 
@@ -299,6 +359,7 @@ export default {
         birthday: '',
         checkinDate: '',
         checkoutDate: '',
+        imageUrl:'',
         imgsetDir:'',
         profilePhoto:'',
         roomNumber: '',
@@ -378,6 +439,9 @@ export default {
     ).then((response) => {
       if (response.data.code === 1) {
         that.form = response.data.data
+        var elderlyId = response.data.data.elderlyId
+        that.form.imageUrl = "https://cos-lqyrmk-1312783534.cos.ap-beijing.myqcloud.com/resources/smart_elderly_care/cv_file/profile/elderly/"+elderlyId+".jpg";
+        console.log(that.form.imageUrl);
       } else {
         that.form = {}
       }
@@ -475,7 +539,9 @@ export default {
           type: 'success',
           message: '添加成功'
         });
-        this.findAll(1)
+        localStorage.setItem("elderlyId", JSON.stringify(response.data.data.elderlyId)) 
+        that.$refs.upload.submit()
+        that.findAll(1)
       }else{
         this.$message({
           type: 'error',
@@ -533,7 +599,9 @@ export default {
           type: 'success',
           message: '修改成功'
         });
-        this.findAll(1)
+        localStorage.setItem("elderlyId", JSON.stringify(that.form.elderlyId)) 
+        that.$refs.uploadModify.submit()
+        that.findAll(1)
       }else{
         this.$message({
           type: 'error',
@@ -546,6 +614,7 @@ export default {
           message: '网络问题，修改失败'
         });          
     });
+   
   },
 
   deleteInfo (index, row) {
@@ -584,7 +653,50 @@ export default {
         message: '已取消删除'
       })
     })
-  }
+  },
+
+  //这是我自定义的移除事件
+  handleClose(i){
+    this.fileList.splice(i,1);//删除上传的文件
+  },
+
+  handleBeforeUpload(file,fileList) {
+  // 获取选择的文件的属性信息
+  this.selectedFile = file;
+  this.fileList = fileList; // 更新已选择的文件列表
+
+  },
+//上传文件的事件
+  uploadFile(){
+    var elderlyId=JSON.parse(localStorage.getItem("elderlyId"))
+    const formData = new FormData();
+    formData.append('file', this.selectedFile);
+    formData.append('id', elderlyId)
+    formData.append('file_type', "elderly")
+    console.log(formData.get('file'));
+    axios.post('http://43.143.247.127:8090/api/v1/info/upload', formData)
+        .then(response => {
+          // 处理成功响应
+          this.$message({
+              type: 'success',
+              message: '上传成功'
+          });
+          console.log("文件上传成功");
+        })
+    .catch(error => {
+      console.error(error);
+      // 处理错误
+      });
+      localStorage.removeItem("elderlyId")
+  },
+  handleRemove(file, fileList) {
+      // 处理文件被移除的逻辑
+      const index = fileList.indexOf(file);
+      if (index !== -1) {
+        fileList.splice(index, 1); // 移除对应的文件
+      }
+    },
+
   }
 }
 </script>

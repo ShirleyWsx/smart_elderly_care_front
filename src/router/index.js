@@ -3,18 +3,21 @@ import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
 import Index from '../views/Index.vue'
 import AdminInfo from '../views/Admin/AdminInfo.vue'
-import AdminReport from '../views/Admin/AdminReport.vue'
+import AdminStatistic from '../views/Admin/AdminStatistic.vue'
 import AdminPortrait from '../views/Admin/AdminPortrait.vue'
 import VolunteerInfo from '../views/Volunteer/VolunteerInfo.vue'
 import VolunteerPortrait from '../views/Volunteer/VolunteerPortrait.vue'
-import VolunteerReport from '../views/Volunteer/VolunteerReport.vue'
+import VolunteerStatistic from '../views/Volunteer/VolunteerStatistic.vue'
 import ElderInfo from '../views/Elder/ElderInfo.vue'
 import ElderPortrait from '../views/Elder/ElderPortrait.vue'
-import ElderReport from '../views/Elder/ElderReport.vue'
+import ElderStatistic from '../views/Elder/ElderStatistic.vue'
 import EventInfo from '../views/Event/EventInfo.vue'
 import CameraThree from '../views/Video/CameraThree.vue'
 import Camera from '../views/Video/Camera.vue'
-
+import CameraInfo from '../views/Video/CameraInfo.vue'
+import EventStatistic from '../views/Event/EventStatistic.vue'
+import CanvasArea from '../views/Video/CanvasArea.vue'
+import Hello from '../views/hello.vue'
 
 Vue.use(VueRouter)
 
@@ -52,9 +55,9 @@ const routes = [
         component: AdminPortrait
       },
       {
-        path: '/adminReport',
+        path: '/adminStatistic',
         name: '报表统计',
-        component: AdminReport
+        component: AdminStatistic
       },
       {
         path: '/volunteerInfo',
@@ -67,9 +70,9 @@ const routes = [
         component: VolunteerPortrait
       },
       {
-        path: '/volunteerReport',
+        path: '/volunteerStatistic',
         name: '实时报表',
-        component: VolunteerReport
+        component: VolunteerStatistic
       },
       {
         path: '/elderInfo',
@@ -82,9 +85,9 @@ const routes = [
         component: ElderPortrait
       },
       {
-        path: '/elderReport',
+        path: '/elderStatistic',
         name: '实时报表',
-        component: ElderReport
+        component: ElderStatistic
       },
       {
         path: '/eventInfo',
@@ -97,10 +100,29 @@ const routes = [
         component:CameraThree
       },
       {
+        path:'/cameraInfo',
+        name:'摄像头基本信息',
+        component:CameraInfo
+      },
+      {
         path:'/camera',
         name:'查看视频',
         component:Camera
+      },
+      {
+        path:'/eventStatistic',
+        name:'事件报表统计',
+        component:EventStatistic
+      },
+      {
+        path:'/hello',
+        component:Hello
+      },
+      {
+        path:'/canvasArea',
+        component:CanvasArea
       }
+      
     ]
   },
 

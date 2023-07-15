@@ -60,7 +60,8 @@
                     <el-input v-model="form.employeeName" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="性别" :label-width="formLabelWidth">
-                    <el-input v-model="form.gender" autocomplete="off"></el-input>
+                  <el-radio v-model="form.gender" label="男">男</el-radio>
+                  <el-radio v-model="form.gender" label="女">女</el-radio>
                 </el-form-item>
                 <el-form-item label="电话" :label-width="formLabelWidth">
                     <el-input v-model="form.phone" autocomplete="off"></el-input>
@@ -69,13 +70,13 @@
                     <el-input v-model="form.idCard" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="出生日期" :label-width="formLabelWidth">
-                    <el-input v-model="form.birthday" autocomplete="off"></el-input>
+                    <el-date-picker v-model="form.birthday" type="date" placeholder="选择日期" value-format="yyyy-MM-dd" autocomplete="off"></el-date-picker>
                 </el-form-item>
                 <el-form-item label="入职日期" :label-width="formLabelWidth">
-                    <el-input v-model="form.hireDate" autocomplete="off"></el-input>
+                    <el-date-picker v-model="form.hireDate" type="date" placeholder="选择日期" value-format="yyyy-MM-dd"  autocomplete="off"></el-date-picker>
                 </el-form-item>
                 <el-form-item label="离职日期" :label-width="formLabelWidth">
-                    <el-input v-model="form.resignDate" autocomplete="off"></el-input>
+                    <el-date-picker v-model="form.resignDate" type="date" placeholder="选择日期" value-format="yyyy-MM-dd"  autocomplete="off"></el-date-picker>
                 </el-form-item>
                 <el-form-item label="图像目录" :label-width="formLabelWidth">
                     <el-input v-model="form.imgsetDir" autocomplete="off"></el-input>
@@ -83,6 +84,25 @@
                 <el-form-item label="头像路径" :label-width="formLabelWidth">
                     <el-input v-model="form.profilePhoto" autocomplete="off"></el-input>
                 </el-form-item>
+                <el-form-item label="上传图像" :label-width="formLabelWidth">
+                  <div>
+                  <el-upload
+                  class="upload-demo"
+                  action
+                  :http-request="uploadFile"
+                  ref="upload"
+                  :auto-upload="false"
+                  :file-list="fileList"
+                  :show-file-list="true"
+                  :before-upload="handleBeforeUpload"
+                  :on-remove="handleRemove"
+                  style="margin-left: 5px; display:inline;font-size:14px;"
+                  >
+                  <el-button size="medium" type="primary" style="margin-top: 5px;margin-bottom: 5px;">选择文件</el-button>
+                  </el-upload>
+                  </div>
+                </el-form-item>
+
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="insertDialogFormVisible = false">取 消</el-button>
@@ -100,7 +120,8 @@
                     <el-input v-model="form.employeeName" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="性别" :label-width="formLabelWidth">
-                    <el-input v-model="form.gender" autocomplete="off"></el-input>
+                  <el-radio v-model="form.gender" label="男">男</el-radio>
+                  <el-radio v-model="form.gender" label="女">女</el-radio>
                 </el-form-item>
                 <el-form-item label="电话" :label-width="formLabelWidth">
                     <el-input v-model="form.phone" autocomplete="off"></el-input>
@@ -109,19 +130,37 @@
                     <el-input v-model="form.idCard" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="出生日期" :label-width="formLabelWidth">
-                    <el-input v-model="form.birthday" autocomplete="off"></el-input>
+                    <el-date-picker v-model="form.birthday" type="date" placeholder="选择日期" value-format="yyyy-MM-dd" autocomplete="off"></el-date-picker>
                 </el-form-item>
                 <el-form-item label="入职日期" :label-width="formLabelWidth">
-                    <el-input v-model="form.hireDate" autocomplete="off"></el-input>
+                    <el-date-picker v-model="form.hireDate" type="date" placeholder="选择日期" value-format="yyyy-MM-dd"  autocomplete="off"></el-date-picker>
                 </el-form-item>
                 <el-form-item label="离职日期" :label-width="formLabelWidth">
-                    <el-input v-model="form.resignDate" autocomplete="off"></el-input>
+                    <el-date-picker v-model="form.resignDate" type="date" placeholder="选择日期" value-format="yyyy-MM-dd"  autocomplete="off"></el-date-picker>
                 </el-form-item>
                 <el-form-item label="图像目录" :label-width="formLabelWidth">
                     <el-input v-model="form.imgsetDir" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="头像路径" :label-width="formLabelWidth">
                     <el-input v-model="form.profilePhoto" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="上传图像" :label-width="formLabelWidth">
+                  <div>
+                    <el-upload
+                    class="upload-demo"
+                    action
+                    :http-request="uploadFile"
+                    ref="uploadModify"
+                    :auto-upload="false"
+                    :file-list="fileList"
+                    :show-file-list="true"
+                    :before-upload="handleBeforeUpload"
+                    :on-remove="handleRemove"
+                    style="margin-left: 5px; display:inline;font-size:14px;"
+                    >
+                  <el-button size="medium" type="primary" style="margin-top: 5px;margin-bottom: 5px;">选择文件</el-button>
+                  </el-upload>
+                  </div>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -163,6 +202,9 @@
                 <el-form-item label="头像路径" :label-width="formLabelWidth">
                     <el-input v-model="form.profilePhoto" autocomplete="off" readonly></el-input>
                 </el-form-item>
+                <el-form-item label="头像" :label-width="formLabelWidth">
+                  <img :src="form.imageUrl" class="avatar">             
+                </el-form-item>
             </el-form>
         </el-dialog>
         
@@ -170,10 +212,26 @@
 </template>
 
 <style>
-
+.el-upload-list__item-name{
+  display: none;
+}
+.avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
+  .spanname{
+    width: 100px;
+    height: 30px;
+    /* background: blue; */
+    position: absolute;
+    top: 75px;
+    left: 40px;
+  }
 </style>
 
 <script>
+ import axios from 'axios';
 export default {
   name: 'AlarmEvent',
   components: {
@@ -184,7 +242,15 @@ export default {
       // 搜索框输入的内容
       input: '',
       tableData: [],
+      dialogVisible:false,
+      fileList:[],
+      imageUrl:'',
 
+      //上传后的文件列表
+      fileList: [],
+
+      selectedFile:null,
+      
       //分页
       pageSize:10,  //默认10条
 
@@ -206,7 +272,8 @@ export default {
         hireDate: '',
         resignDate: '',
         imgsetDir:'',
-        profilePhoto:''
+        profilePhoto:'',
+        imageUrl:'',
       },
       formLabelWidth: '80px',
 
@@ -274,6 +341,8 @@ export default {
     ).then((response) => {
       if (response.data.code === 1) {
         that.form = response.data.data
+        var employeeId = response.data.data.employeeId
+        that.form.imageUrl = "https://cos-lqyrmk-1312783534.cos.ap-beijing.myqcloud.com/resources/smart_employee_care/cv_file/profile/employee/"+employeeId+".jpg";
       } else {
         that.form = {}
       }
@@ -361,6 +430,8 @@ export default {
           type: 'success',
           message: '添加成功'
         });
+        localStorage.setItem("employeeId", JSON.stringify(response.data.data.employeeId)) 
+        that.$refs.upload.submit()
         this.findAll(1)
       }else{
         this.$message({
@@ -409,6 +480,8 @@ export default {
           type: 'success',
           message: '修改成功'
         });
+        that.$refs.uploadModify.submit()
+        localStorage.setItem("employeeId", JSON.stringify(that.form.employeeId)) 
         this.findAll(1)
       }else{
         this.$message({
@@ -459,7 +532,44 @@ export default {
         message: '已取消删除'
       })
     })
-  }
+  },
+  
+  handleBeforeUpload(file,fileList) {
+  // 获取选择的文件的属性信息
+  this.selectedFile = file;
+  this.fileList = fileList
+},
+//上传文件的事件
+  uploadFile(){
+    var employeeId=JSON.parse(localStorage.getItem("employeeId"))
+    const formData = new FormData();
+    formData.append('file', this.selectedFile);
+    formData.append('id', employeeId)
+    formData.append('file_type', "employee")
+    console.log(formData.get('file'));
+    axios.post('http://43.143.247.127:8090/api/v1/info/upload', formData)
+        .then(response => {
+          // 处理成功响应
+          this.$message({
+              type: 'success',
+              message: '上传成功'
+          });
+          console.log("文件上传成功");
+        })
+    .catch(error => {
+      console.error(error);
+      // 处理错误
+      });
+      localStorage.removeItem("employeeId")
+  },
+  handleRemove(file, fileList) {
+      // 处理文件被移除的逻辑
+      const index = fileList.indexOf(file);
+      if (index !== -1) {
+        fileList.splice(index, 1); // 移除对应的文件
+      }
+    }
+
   }
 }
 </script>

@@ -24,7 +24,7 @@
                       </template>
                       <el-menu-item @click="gotoAdminInfo" index="1-1">基本信息</el-menu-item>
                       <el-menu-item @click="gotoVolunteerInfo" index="1-2">头像管理</el-menu-item>
-                      <el-menu-item @click="gotoElderInfo" index="1-3">报表统计</el-menu-item>
+                      <el-menu-item @click="gotoAdminStatistic" index="1-3">报表统计</el-menu-item>
                   </el-submenu>
 
                   <el-submenu index="2" >
@@ -34,7 +34,7 @@
                       </template>
                       <el-menu-item @click="gotoVolunteerInfo" index="2-1">基本信息</el-menu-item>
                       <el-menu-item @click="gotoVolunteerInfo" index="2-2">头像管理</el-menu-item>
-                      <el-menu-item @click="gotoElderInfo" index="2-3">报表统计</el-menu-item>
+                      <el-menu-item @click="gotoVolunteerStatistic" index="2-3">报表统计</el-menu-item>
                   </el-submenu>
 
                   <el-submenu index="3">
@@ -44,7 +44,7 @@
                       </template>
                       <el-menu-item @click="gotoElderInfo" index="3-1">基本信息</el-menu-item>
                       <el-menu-item @click="gotoVolunteerInfo" index="3-2">头像管理</el-menu-item>
-                      <el-menu-item @click="gotoElderInfo" index="3-3">报表统计</el-menu-item>
+                      <el-menu-item @click="gotoElderStatistic" index="3-3">报表统计</el-menu-item>
                   </el-submenu>
 
                   <el-submenu index="4">
@@ -54,16 +54,18 @@
                       </template>
                       <el-menu-item @click="gotoEventInfo" index="4-1">基本信息</el-menu-item>
                       <el-menu-item @click="gotoVolunteerInfo" index="4-2">头像管理</el-menu-item>
-                      <el-menu-item @click="gotoElderInfo" index="4-3">报表统计</el-menu-item>
+                      <el-menu-item @click="gotoEventStatistic" index="4-3">报表统计</el-menu-item>
                   </el-submenu>
+
 
                   <el-submenu index="5">
                       <template slot="title">
                           <i class="el-icon-setting"></i>
                           <span slot="title">视频监控</span>
                       </template>
-                      <el-menu-item @click="gotoCamera" index="5-1">查看视频</el-menu-item>
-                      <el-menu-item @click="gotoCameraThree" index="5-2">视频三</el-menu-item>
+                      <el-menu-item @click="gotoCameraInfo" index="5-1">基本信息</el-menu-item>
+                      <el-menu-item @click="gotoCamera" index="5-2">查看视频</el-menu-item>
+                      <el-menu-item @click="gotoCameraThree" index="5-3">视频三</el-menu-item>
                   </el-submenu>
 
                   <el-submenu index="6">
@@ -241,14 +243,26 @@ methods: {
   gotoVolunteerInfo () {
     this.$router.push('/volunteerInfo')
   },
+  gotoVolunteerStatistic(){
+    this.$router.push('/volunteerStatistic')
+  },
   gotoAdminInfo () {
     this.$router.push('/adminInfo')
+  },
+  gotoAdminStatistic(){
+    this.$router.push('/adminStatistic')
   },
   
   gotoEventInfo(){
     this.$router.push('/eventInfo')
   },
 
+  gotoEventStatistic(){
+    this.$router.push('/eventStatistic')
+  },
+  gotoCameraInfo(){
+    this.$router.push('/cameraInfo')
+  },
   gotoCamera () {
     this.$router.push('/camera')
   },
@@ -265,6 +279,9 @@ methods: {
     this.$router.push('/elderInfo')
   },
 
+  gotoElderStatistic(){
+    this.$router.push('/elderStatistic')
+  },
   fullScreen () {
     if (this.isfullScreen) {
       const docElm = document.documentElement

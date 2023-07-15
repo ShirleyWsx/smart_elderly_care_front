@@ -62,7 +62,7 @@
                   <el-input v-model="formAdd.eventType" autocomplete="off"></el-input>
               </el-form-item>
               <el-form-item label="事件发生的时间" :label-width="formLabelWidth">
-                  <el-input v-model="formAdd.eventDate" autocomplete="off"></el-input>
+                  <el-date-picker v-model="formAdd.eventDate" type="date" placeholder="选择日期" value-format="yyyy-MM-dd" autocomplete="off"></el-date-picker>
               </el-form-item>
               <el-form-item label="事件发生的地点" :label-width="formLabelWidth">
                   <el-input v-model="formAdd.eventLocation" autocomplete="off"></el-input>
@@ -90,7 +90,7 @@
                   <el-input v-model="form.eventType" autocomplete="off"></el-input>
               </el-form-item>
               <el-form-item label="事件发生的时间" :label-width="formLabelWidth">
-                  <el-input v-model="form.eventDate" autocomplete="off"></el-input>
+                  <el-date-picker v-model="form.eventDate" type="date" placeholder="选择日期" value-format="yyyy-MM-dd" autocomplete="off"></el-date-picker>
               </el-form-item>
               <el-form-item label="事件发生的地点" :label-width="formLabelWidth">
                   <el-input v-model="form.eventLocation" autocomplete="off"></el-input>

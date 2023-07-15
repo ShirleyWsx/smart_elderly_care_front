@@ -7,6 +7,7 @@ import axios from 'axios'
 // import VueSession from 'vue-session'
 // 引入echarts
 import * as echarts from 'echarts'
+
 // import horizontalScroll from 'el-table-horizontal-scroll'
 
 axios.defaults.baseURL = "http://43.143.247.127:8088/api/v1"
