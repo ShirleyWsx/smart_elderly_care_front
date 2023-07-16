@@ -12,13 +12,10 @@ import ElderInfo from '../views/Elder/ElderInfo.vue'
 import ElderPortrait from '../views/Elder/ElderPortrait.vue'
 import ElderStatistic from '../views/Elder/ElderStatistic.vue'
 import EventInfo from '../views/Event/EventInfo.vue'
-import CameraThree from '../views/Video/CameraThree.vue'
 import Camera from '../views/Video/Camera.vue'
 import CameraInfo from '../views/Video/CameraInfo.vue'
 import EventStatistic from '../views/Event/EventStatistic.vue'
-import CanvasArea from '../views/Video/CanvasArea.vue'
 import Home from '../views/Home.vue'
-import Hello from '../views/hello.vue'
 
 Vue.use(VueRouter)
 
@@ -100,11 +97,6 @@ const routes = [
         component: EventInfo
       },
       {
-        path:'/cameraThree',
-        name:'视频三',
-        component:CameraThree
-      },
-      {
         path:'/cameraInfo',
         name:'摄像头基本信息',
         component:CameraInfo
@@ -118,14 +110,6 @@ const routes = [
         path:'/eventStatistic',
         name:'事件报表统计',
         component:EventStatistic
-      },
-      {
-        path:'/hello',
-        component:Hello
-      },
-      {
-        path:'/canvasArea',
-        component:CanvasArea
       }
       
     ]

@@ -32,7 +32,7 @@
                           <span slot="title">工作人员管理</span>
                       </template>
                       <el-menu-item @click="gotoAdminInfo" index="2-1">基本信息</el-menu-item>
-                      <el-menu-item @click="gotoVolunteerInfo" index="2-2">头像管理</el-menu-item>
+                      <el-menu-item @click=" " index="2-2">头像管理</el-menu-item>
                       <el-menu-item @click="gotoAdminStatistic" index="2-3">报表统计</el-menu-item>
                   </el-submenu>
 
@@ -42,7 +42,7 @@
                           <span slot="title">义工管理</span>
                       </template>
                       <el-menu-item @click="gotoVolunteerInfo" index="3-1">基本信息</el-menu-item>
-                      <el-menu-item @click="gotoVolunteerInfo" index="3-2">头像管理</el-menu-item>
+                      <el-menu-item @click=" " index="3-2">头像管理</el-menu-item>
                       <el-menu-item @click="gotoVolunteerStatistic" index="3-3">报表统计</el-menu-item>
                   </el-submenu>
 
@@ -52,7 +52,7 @@
                           <span slot="title">老年人管理</span>
                       </template>
                       <el-menu-item @click="gotoElderInfo" index="4-1">基本信息</el-menu-item>
-                      <el-menu-item @click="gotoVolunteerInfo" index="4-2">头像管理</el-menu-item>
+                      <el-menu-item @click=" " index="4-2">头像管理</el-menu-item>
                       <el-menu-item @click="gotoElderStatistic" index="4-3">报表统计</el-menu-item>
                   </el-submenu>
 
@@ -62,7 +62,7 @@
                           <span slot="title">事件管理</span>
                       </template>
                       <el-menu-item @click="gotoEventInfo" index="5-1">基本信息</el-menu-item>
-                      <el-menu-item @click="gotoVolunteerInfo" index="5-2">头像管理</el-menu-item>
+                      <el-menu-item @click=" " index="5-2">头像管理</el-menu-item>
                       <el-menu-item @click="gotoEventStatistic" index="5-3">报表统计</el-menu-item>
                   </el-submenu>
 
@@ -74,7 +74,6 @@
                       </template>
                       <el-menu-item @click="gotoCameraInfo" index="6-1">基本信息</el-menu-item>
                       <el-menu-item @click="gotoCamera" index="6-2">查看视频</el-menu-item>
-                      <el-menu-item @click="gotoCameraThree" index="6-3">视频三</el-menu-item>
                   </el-submenu>
 
                   <el-submenu index="7">
@@ -266,7 +265,7 @@ methods: {
     } else {
       this.collapseIcon = 'el-icon-arrow-left'
       this.isCollapse = false
-      this.systemTitle = '校园安全系统管理端'
+      this.systemTitle = '智慧养老管理系统'
     }
   },
   gotoHome(){
@@ -299,9 +298,6 @@ methods: {
     this.$router.push('/camera')
   },
 
-  gotoCameraThree () {
-    this.$router.push('/cameraThree')
-  },
 
   gotoSelectScene () {
     this.$router.push('/selectScene')

@@ -38,7 +38,7 @@ export default {
          that.lineChart = that.$echarts.init(that.$refs.lineChart)
          that.lineChart.setOption({
           title: {
-              text: '离开访问时间对比'
+              text: '事件发生时间对比'
           },
           // 提示框
           tooltip: {
@@ -127,7 +127,7 @@ export default {
           that.myChart2 = that.$echarts.init(that.$refs.myChart2)
           that.myChart2.setOption({
               title: {
-                  text: '年龄统计',
+                  text: '事件发生地点统计',
                   left: 'top',
                   // top: '43%',
                   subtextStyle: {
