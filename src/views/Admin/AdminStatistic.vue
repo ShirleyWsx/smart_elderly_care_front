@@ -89,6 +89,9 @@ export default {
         this.$http.get(
         '/employee/statistics/time',config
         ).then((response) => {
+            if (response.status === 401) {
+          this.$router.push('/login');
+        } else {
             if (response.data.code === 1){
             this.$message({
             type: 'success',
@@ -158,7 +161,7 @@ export default {
             type: 'error',
             message: '查询失败'
             });
-        }  
+        }  }
         }).catch(() => {
             this.$message({
             type: 'info',

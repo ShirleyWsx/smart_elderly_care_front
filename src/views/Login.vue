@@ -224,6 +224,9 @@ export default {
         "/user/login",
         {"username": this.loginForm.username, "password": this.loginForm.password }
       ).then((response) => {
+        if (response.status === 401) {
+          this.$router.push('/login');
+        } else {
         if (response.data.code === 1) {
           this.$message({
             type: 'success',
@@ -237,7 +240,7 @@ export default {
             type: 'error',
             message: '登录失败'
           });
-        }
+        }}
       })
     },
     // 加载管理员信息

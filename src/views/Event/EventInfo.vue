@@ -265,6 +265,9 @@ methods: {
   this.$http.get(
     '/event/page',config
   ).then((response) => {
+    if (response.status === 401) {
+          this.$router.push('/login');
+        } else {
     if (response.data.code === 1){
       this.$message({
         type: 'success',
@@ -277,7 +280,7 @@ methods: {
         type: 'error',
         message: '查询失败'
       });
-    }  
+    } } 
   }).catch(() => {
       this.$message({
         type: 'info',
@@ -302,11 +305,14 @@ getInfoById (id) {
   this.$http.get(
     '/event/' + id,config
   ).then((response) => {
+    if (response.status === 401) {
+          this.$router.push('/login');
+        } else {
     if (response.data.code === 1) {
       that.form = response.data.data
     } else {
       that.form = {}
-    }
+    }}
   }).catch(() => {
       this.$message({
         type: 'info',
@@ -335,6 +341,9 @@ getInfoByName () {
     this.$http.get(
     '/event/page',config
   ).then((response) => {
+    if (response.status === 401) {
+          this.$router.push('/login');
+        } else {
     if (response.data.code === 1){
       this.$message({
         type: 'success',
@@ -346,7 +355,7 @@ getInfoByName () {
         type: 'error',
         message: '查询失败'
       });
-    }  
+    } } 
   }).catch(() => {
       this.$message({
         type: 'info',
@@ -386,6 +395,9 @@ insertInfo () {
     },
     config
   ).then((response) => {
+    if (response.status === 401) {
+          this.$router.push('/login');
+        } else {
     if (response.data.code === 1){
       this.$message({
         type: 'success',
@@ -397,7 +409,7 @@ insertInfo () {
         type: 'error',
         message: '添加失败'
       });
-    }    
+    }  }  
   }).catch(() => {
       this.$message({
         type: 'info',
@@ -430,6 +442,9 @@ modifyInfo () {
     },
     config
   ).then((response) => {
+    if (response.status === 401) {
+          this.$router.push('/login');
+        } else {
     if (response.data.code === 1){
       this.$message({
         type: 'success',
@@ -441,7 +456,7 @@ modifyInfo () {
         type: 'error',
         message: '修改失败'
       });
-    }    
+    }   } 
   }).catch(() => {
       this.$message({
         type: 'info',
@@ -465,6 +480,9 @@ deleteInfo (index, row) {
     this.$http.delete(
       '/event/' + row.eventId,config
     ).then((response) => {
+      if (response.status === 401) {
+          this.$router.push('/login');
+        } else {
       if(response.data.code === 1) {
         this.$message({
         type: 'success',
@@ -477,7 +495,7 @@ deleteInfo (index, row) {
         type: 'error',
         message: '删除失败'
       });
-      }
+      }}
     })
   }).catch(() => {
     this.$message({

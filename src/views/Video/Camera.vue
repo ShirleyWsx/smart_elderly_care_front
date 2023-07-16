@@ -30,8 +30,8 @@
         data(){
             return{
                  // 加载视频前顶替用的图片
-                // imageSrc: require("../../assets/images/blank.jpg"),
-                imageSrc: require("../../assets/images/jiankong.png"),
+                imageSrc: require("../../assets/images/blank.png"),
+                // imageSrc: require("../../assets/images/jiankong.png"),
                 selectedValue:'',
                 changeValueC:'',
                 selectedAlgValue:'',
@@ -92,7 +92,7 @@
             const video_url1 = 'rtmp://43.143.247.127:1935/hls/lym';
             const url1 = `${server_url}?video_url=${video_url1}`;
             try {
-                await this.loadImage(image1, url1, 5000); // 设置加载超时时间为 5000 毫秒（5秒）
+                await this.loadImage(image1, url1, 60000); // 设置加载超时时间为 6000 毫秒（60秒）
             } catch (error) {
                 console.error(error);
             // 视频流加载失败
@@ -107,7 +107,7 @@
             const video_url2 = 'rtmp://43.143.247.127:1935/hls/wz';
             const url2 = `${server_url}?video_url=${video_url2}`;
             try {
-            await this.loadImage(image2, url2, 5000); // 设置加载超时时间为 5000 毫秒（5秒）
+            await this.loadImage(image2, url2, 60000); // 设置加载超时时间为 6000 毫秒（60秒）
             } catch (error) {
                 console.error(error);
             // 视频流加载失败
@@ -121,7 +121,7 @@
             const video_url3 = 'rtmp://43.143.247.127:1935/hls/wsx';
             const url3 = `${server_url}?video_url=${video_url3}`;
             try {
-                await this.loadImage(image3, url3, 5000); // 设置加载超时时间为 5000 毫秒（5秒）
+                await this.loadImage(image3, url3, 60000); // 设置加载超时时间为 6000 毫秒（60秒）
             } catch (error) {
                 console.error(error);
                 // 视频流加载失败
@@ -149,135 +149,127 @@
         });
         },
         startProcess() {
-      this.showCoordinates = true;
-      this.$refs.image.addEventListener('mousemove', this.handleMouseMove);
-      this.$refs.image.addEventListener('click', this.handleClick);
-      this.$message({
-          type: 'success',
-          message: '开始选择四边形区域点坐标'
-      });
-    },
-    completeProcess() {
-      this.showCoordinates = false;
-      this.completed = true;
-      this.$refs.image.removeEventListener('mousemove', this.handleMouseMove);
-      this.$refs.image.removeEventListener('click', this.handleClick);
+          this.showCoordinates = true;
+          this.$refs.image.addEventListener('mousemove', this.handleMouseMove);
+          this.$refs.image.addEventListener('click', this.handleClick);
+          this.$message({
+              type: 'success',
+              message: '开始选择四边形区域点坐标'
+          });
+        },
+        completeProcess() {
+          this.showCoordinates = false;
+          this.completed = true;
+          this.$refs.image.removeEventListener('mousemove', this.handleMouseMove);
+          this.$refs.image.removeEventListener('click', this.handleClick);
 
-      this.open()
-      
-    },
-    handleMouseMove(event) {
-      this.mouseX = Math.round(event.pageX - this.imageRect.left);
-      this.mouseY = Math.round(event.pageY - this.imageRect.top);
-    },
-    handleClick(event) {
+          this.open()
+          
+        },
+        handleMouseMove(event) {
+          this.mouseX = Math.round(event.pageX - this.imageRect.left);
+          this.mouseY = Math.round(event.pageY - this.imageRect.top);
+        },
+        handleClick(event) {
 
-      this.count++
-      
-      if (this.count == 4) {
-        this.completed = true;
-      }
-      else if (this.count > 4) {
-        this.$message({
-            type: 'message',
-            message: '已选择四个点，再次点击则取消第一个点！'
-        });
-        return 
-      }
+          this.count++
+          
+          if (this.count == 4) {
+            this.completed = true;
+          }
+          else if (this.count > 4) {
+            this.$message({
+                type: 'message',
+                message: '已选择四个点，再次点击则取消第一个点！'
+            });
+            return 
+          }
 
-      const markerTop = Math.round(event.pageY - this.imageRect.top - 5);
-      const markerLeft = Math.round(event.pageX - this.imageRect.left - 5);
+          const markerTop = Math.round(event.pageY - this.imageRect.top - 5);
+          const markerLeft = Math.round(event.pageX - this.imageRect.left - 5);
 
-      if (this.positions.length > 0) {
-        const prevPosition = this.positions[this.positions.length - 1];
-        const line = {
-          x1: prevPosition.left + 5,
-          y1: prevPosition.top + 5,
-          x2: markerLeft + 5,
-          y2: markerTop + 5
-        };
-        console.log(line)
-        this.lines.push(line);
-      }
+          if (this.positions.length > 0) {
+            const prevPosition = this.positions[this.positions.length - 1];
+            const line = {
+              x1: prevPosition.left + 5,
+              y1: prevPosition.top + 5,
+              x2: markerLeft + 5,
+              y2: markerTop + 5
+            };
+            console.log(line)
+            this.lines.push(line);
+          }
 
-      this.positions.push({ top: markerTop, left: markerLeft });
-    },
-    // getLineStyle(line) {
-    //   const length = Math.hypot(line.x2 - line.x1, line.y2 - line.y1);
-    //   const angle = Math.atan2(line.y2 - line.y1, line.x2 - line.x1) * (180 / Math.PI);
+          this.positions.push({ top: markerTop, left: markerLeft });
+        },
 
-    //   return {
-    //     width: `${length}px`,
-    //     transform: `translate(${line.x1}px, ${line.y1}px) rotate(${angle}deg)`,
-    //   };
-    // },
-    open() {
+        open() {
 
-      var msg = '坐标a：(' + this.positions[0].left + ", " + this.positions[0].top + '), ' +
-      '坐标b：(' + this.positions[1].left + ", " + this.positions[1].top + '), ' +
-      '坐标c：(' + this.positions[2].left + ", " + this.positions[2].top + '), ' +
-      '坐标d：(' + this.positions[3].left + ", " + this.positions[3].top + ')'
+          var msg = '坐标a：(' + this.positions[0].left + ", " + this.positions[0].top + '), ' +
+          '坐标b：(' + this.positions[1].left + ", " + this.positions[1].top + '), ' +
+          '坐标c：(' + this.positions[2].left + ", " + this.positions[2].top + '), ' +
+          '坐标d：(' + this.positions[3].left + ", " + this.positions[3].top + ')'
 
-      // 计算禁区的请求参数
-      const imgElement = this.$refs.image;
-      const width = imgElement.style.width;
-      const height = imgElement.style.height;
+          // 计算禁区的请求参数
+          const imgElement = this.$refs.image;
+          const width = imgElement.style.width;
+          const height = imgElement.style.height;
 
-      var px1 = this.positions[0].left / parseFloat(width)
-      var py1 = this.positions[0].top / parseFloat(height)
-      var px2 = this.positions[1].left / parseFloat(width)
-      var py2 = this.positions[1].top / parseFloat(height)
-      var px3 = this.positions[2].left / parseFloat(width)
-      var py3 = this.positions[2].top / parseFloat(height)
-      var px4 = this.positions[3].left / parseFloat(width)
-      var py4 = this.positions[3].top / parseFloat(height)
+          var px1 = this.positions[0].left / parseFloat(width)
+          var py1 = this.positions[0].top / parseFloat(height)
+          var px2 = this.positions[1].left / parseFloat(width)
+          var py2 = this.positions[1].top / parseFloat(height)
+          var px3 = this.positions[2].left / parseFloat(width)
+          var py3 = this.positions[2].top / parseFloat(height)
+          var px4 = this.positions[3].left / parseFloat(width)
+          var py4 = this.positions[3].top / parseFloat(height)
 
-      this.$confirm(msg, '区域框选完毕！', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.$message({
-          type: 'success',
-          message: '框选成功！请等待模型加载'
-        });
-        
-        // console.log(px1 + ", " + py1)
-        // console.log(px2 + ", " + py2)
-        // console.log(px3 + ", " + py3)
-        // console.log(px4 + ", " + py4)
+          this.$confirm(msg, '区域框选完毕！', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.$message({
+              type: 'success',
+              message: '框选成功！请等待模型加载'
+            });
+            
+            // console.log(px1 + ", " + py1)
+            // console.log(px2 + ", " + py2)
+            // console.log(px3 + ", " + py3)
+            // console.log(px4 + ", " + py4)
 
-        // 请求体数据
-        var data = {
-          "px1": px1,
-          "py1": py1,
-          "px2": px2,
-          "py2": py2,
-          "px3": px3,
-          "py3": py3,
-          "px4": px4,
-          "py4": py4
+            // 请求体数据
+            var data = {
+              "px1": px1,
+              "py1": py1,
+              "px2": px2,
+              "py2": py2,
+              "px3": px3,
+              "py3": py3,
+              "px4": px4,
+              "py4": py4
+            }
+
+            // 发请求
+            console.log(data)
+
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消'
+            });
+          });
+          
+          this.positions = []
+          this.lines = []
+          this.completed = false
+          this.count = 0
         }
-
-        // 发请求
-        console.log(data)
-
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消'
-        });
-      });
-      
-      this.positions = []
-      this.lines = []
-      this.completed = false
-      this.count = 0
-    }
-    },
-    mounted() {
-    this.imageRect = this.$refs.image.getBoundingClientRect();
-  }
+      },
+        mounted() {
+        this.imageRect = this.$refs.image.getBoundingClientRect();
+      }
 };
 </script>
 <style>

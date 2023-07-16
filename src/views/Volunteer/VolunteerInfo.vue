@@ -305,6 +305,9 @@ methods: {
     this.$http.get(
       '/volunteer/page',config
     ).then((response) => {
+      if (response.status === 401) {
+          this.$router.push('/login');
+        } else {
       if (response.data.code === 1){
         this.$message({
           type: 'success',
@@ -316,7 +319,7 @@ methods: {
           type: 'error',
           message: '查询失败'
         });
-      }  
+      }}  
     }).catch(() => {
         this.$message({
           type: 'info',
@@ -342,13 +345,16 @@ methods: {
     this.$http.get(
       '/volunteer/' + id,config
     ).then((response) => {
+      if (response.status === 401) {
+          this.$router.push('/login');
+        } else {
       if (response.data.code === 1) {
         that.form = response.data.data
         var volunteerId = response.data.data.volunteerId
         that.form.imageUrl = "https://cos-lqyrmk-1312783534.cos.ap-beijing.myqcloud.com/resources/smart_elderly_care/cv_file/profile/volunteer/"+volunteerId+".jpg";
       } else {
         that.form = {}
-      }
+      }}
     }).catch(() => {
         this.$message({
           type: 'info',
@@ -375,6 +381,9 @@ methods: {
       this.$http.get(
       '/volunteer/page',config
     ).then((response) => {
+      if (response.status === 401) {
+          this.$router.push('/login');
+        } else {
       if (response.data.code === 1){
         this.$message({
           type: 'success',
@@ -386,7 +395,7 @@ methods: {
           type: 'error',
           message: '查询失败'
         });
-      }  
+      }}  
     }).catch(() => {
         this.$message({
           type: 'info',
@@ -427,6 +436,9 @@ methods: {
       },
       config
     ).then((response) => {
+      if (response.status === 401) {
+          this.$router.push('/login');
+        } else {
       if (response.data.code === 1){
         this.$message({
           type: 'success',
@@ -440,7 +452,7 @@ methods: {
           type: 'error',
           message: '添加失败'
         });
-      }    
+      }}    
     }).catch(() => {
         this.$message({
           type: 'info',
@@ -477,6 +489,9 @@ methods: {
       },
       config
     ).then((response) => {
+      if (response.status === 401) {
+          this.$router.push('/login');
+        } else {
       if (response.data.code === 1){
         this.$message({
           type: 'success',
@@ -490,7 +505,7 @@ methods: {
           type: 'error',
           message: '修改失败'
         });
-      }    
+      } }   
     }).catch(() => {
         this.$message({
           type: 'info',
@@ -514,6 +529,9 @@ methods: {
       this.$http.delete(
         '/volunteer/' + row.volunteerId,config
       ).then((response) => {
+        if (response.status === 401) {
+          this.$router.push('/login');
+        } else {
         if(response.data.code === 1) {
           this.$message({
           type: 'success',
@@ -526,7 +544,7 @@ methods: {
           type: 'error',
           message: '删除失败'
         });
-        }
+        }}
       })
     }).catch(() => {
       this.$message({
@@ -550,12 +568,15 @@ methods: {
     console.log(formData.get('file'));
     axios.post('http://43.143.247.127:8090/api/v1/info/upload', formData)
         .then(response => {
+          if (response.status === 401) {
+          this.$router.push('/login');
+        } else {
           // 处理成功响应
           this.$message({
               type: 'success',
               message: '上传成功'
           });
-          console.log("文件上传成功");
+          console.log("文件上传成功");}
         })
     .catch(error => {
       console.error(error);

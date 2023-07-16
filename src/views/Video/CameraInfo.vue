@@ -155,6 +155,9 @@
     this.$http.get(
       '/camera/page',config
     ).then((response) => {
+      if (response.status === 401) {
+          this.$router.push('/login');
+        } else {
       if (response.data.code === 1){
         this.$message({
           type: 'success',
@@ -167,7 +170,7 @@
           type: 'error',
           message: '查询失败'
         });
-      }  
+      } } 
     }).catch(() => {
         this.$message({
           type: 'info',
@@ -192,11 +195,14 @@
     this.$http.get(
       '/camera/' + id,config
     ).then((response) => {
+      if (response.status === 401) {
+          this.$router.push('/login');
+        } else {
       if (response.data.code === 1) {
         that.form = response.data.data
       } else {
         that.form = {}
-      }
+      }}
     }).catch(() => {
         this.$message({
           type: 'info',
@@ -224,6 +230,9 @@
       this.$http.get(
       '/camera/page',config
     ).then((response) => {
+      if (response.status === 401) {
+          this.$router.push('/login');
+        } else {
       if (response.data.code === 1){
         this.$message({
           type: 'success',
@@ -235,7 +244,7 @@
           type: 'error',
           message: '查询失败'
         });
-      }  
+      } } 
     }).catch(() => {
         this.$message({
           type: 'info',
@@ -272,6 +281,9 @@
       },
       config
     ).then((response) => {
+      if (response.status === 401) {
+          this.$router.push('/login');
+        } else {
       if (response.data.code === 1){
         this.$message({
           type: 'success',
@@ -283,7 +295,7 @@
           type: 'error',
           message: '添加失败'
         });
-      }    
+      }}    
     }).catch(() => {
         this.$message({
           type: 'info',
@@ -313,6 +325,9 @@
       },
       config
     ).then((response) => {
+      if (response.status === 401) {
+          this.$router.push('/login');
+        } else {
       if (response.data.code === 1){
         this.$message({
           type: 'success',
@@ -324,7 +339,7 @@
           type: 'error',
           message: '修改失败'
         });
-      }    
+      } }   
     }).catch(() => {
         this.$message({
           type: 'info',
@@ -348,6 +363,9 @@
       this.$http.delete(
         '/camera/' + row.cameraId,config
       ).then((response) => {
+        if (response.status === 401) {
+          this.$router.push('/login');
+        } else {
         if(response.data.code === 1) {
           this.$message({
           type: 'success',
@@ -360,7 +378,7 @@
           type: 'error',
           message: '删除失败'
         });
-        }
+        }}
       })
     }).catch(() => {
       this.$message({

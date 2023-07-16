@@ -227,6 +227,26 @@ data () {
     direction: 'rtl'
   }
 },
+// 在进入系统的组件（如App.vue）的created钩子函数中进行判断
+created() {
+  const token = JSON.parse(localStorage.getItem('token'))  // 从本地存储获取token
+  // 如果token存在
+  if (token) {
+    // 执行相关操作，比如跳转到主页
+    this.$router.push('/index');
+    console.log(token);
+  } else {
+    // 如果token不存在，执行处理未登录的逻辑，比如跳转到登录页
+    this.$router.push('/login');
+  }
+},
+mounted() {
+        // 关闭浏览器窗口的时候清空浏览器缓存在localStorage的数据
+        window.onbeforeunload = function (e) {
+            var storage = window.localStorage;
+            storage.clear();
+        };
+},
 methods: {
 
   changeIcon () {
@@ -341,6 +361,8 @@ methods: {
           type: 'success',
           message: '已退出登录!'
         });
+         // 清除LocalStorage中的缓存
+        localStorage.removeItem('token');
         this.$router.push('/login')
       } else {
         this.$message({

@@ -400,6 +400,9 @@ export default {
     this.$http.get(
       '/elderly/page',config
     ).then((response) => {
+      if (response.status === 401) {
+          this.$router.push('/login');
+        } else {
       if (response.data.code === 1){
         this.$message({
           type: 'success',
@@ -411,7 +414,7 @@ export default {
           type: 'error',
           message: '查询失败'
         });
-      }  
+      } }  
     }).catch(() => {
         this.$message({
           type: 'info',
@@ -437,6 +440,9 @@ export default {
     this.$http.get(
       '/elderly/' + id,config
     ).then((response) => {
+      if (response.status === 401) {
+          this.$router.push('/login');
+        } else {
       if (response.data.code === 1) {
         that.form = response.data.data
         var elderlyId = response.data.data.elderlyId
@@ -444,7 +450,7 @@ export default {
         console.log(that.form.imageUrl);
       } else {
         that.form = {}
-      }
+      }}
     }).catch(() => {
         this.$message({
           type: 'info',
@@ -472,6 +478,9 @@ export default {
       this.$http.get(
       '/elderly/page',config
     ).then((response) => {
+      if (response.status === 401) {
+          this.$router.push('/login');
+        } else {
       if (response.data.code === 1){
         this.$message({
           type: 'success',
@@ -483,7 +492,7 @@ export default {
           type: 'error',
           message: '查询失败'
         });
-      }  
+      } } 
     }).catch(() => {
         this.$message({
           type: 'info',
@@ -534,6 +543,9 @@ export default {
       },
       config
     ).then((response) => {
+      if (response.status === 401) {
+          this.$router.push('/login');
+        } else {
       if (response.data.code === 1){
         this.$message({
           type: 'success',
@@ -547,7 +559,7 @@ export default {
           type: 'error',
           message: '添加失败'
         });
-      }    
+      }  }  
     }).catch(() => {
         this.$message({
           type: 'info',
@@ -594,6 +606,9 @@ export default {
       },
       config
     ).then((response) => {
+      if (response.status === 401) {
+          this.$router.push('/login');
+        } else {
       if (response.data.code === 1){
         this.$message({
           type: 'success',
@@ -607,7 +622,7 @@ export default {
           type: 'error',
           message: '修改失败'
         });
-      }    
+      }}    
     }).catch(() => {
         this.$message({
           type: 'info',
@@ -633,6 +648,9 @@ export default {
       this.$http.delete(
         '/elderly/' + row.elderlyId,config
       ).then((response) => {
+        if (response.status === 401) {
+          this.$router.push('/login');
+        } else {
         if(response.data.code === 1) {
           this.$message({
           type: 'success',
@@ -645,7 +663,7 @@ export default {
           type: 'error',
           message: '删除失败'
         });
-        }
+        }}
       })
     }).catch(() => {
       this.$message({
@@ -655,7 +673,7 @@ export default {
     })
   },
 
-  //这是我自定义的移除事件
+  //自定义的移除事件
   handleClose(i){
     this.fileList.splice(i,1);//删除上传的文件
   },
@@ -676,12 +694,15 @@ export default {
     console.log(formData.get('file'));
     axios.post('http://43.143.247.127:8090/api/v1/info/upload', formData)
         .then(response => {
+          if (response.status === 401) {
+          this.$router.push('/login');
+        } else {
           // 处理成功响应
           this.$message({
               type: 'success',
               message: '上传成功'
           });
-          console.log("文件上传成功");
+          console.log("文件上传成功");}
         })
     .catch(error => {
       console.error(error);
