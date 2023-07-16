@@ -2,7 +2,7 @@
   <div>
       <div style="float: left;">
           <el-input
-              placeholder="请输入事件类型编号"
+              placeholder="请输入事件的类型编号"
               v-model="input"
               clearable
               style="width: 300px; text-align: center;">
@@ -34,6 +34,17 @@
           <el-table-column prop="eventId" label="编号" sortable width="180" header-align="center" align="center">
           </el-table-column>
           <el-table-column prop="eventType" label="事件类型"  header-align="center" align="center">
+            <template slot-scope="scope">
+              <span v-if="scope.row.eventType=== '0'">未知检测</span>
+              <span v-if="scope.row.eventType=== '1'">禁区检测</span>
+              <span v-if="scope.row.eventType=== '2'">人脸识别</span>
+              <span v-if="scope.row.eventType=== '3'">情绪识别</span>
+              <span v-if="scope.row.eventType=== '4'">交互识别</span>
+              <span v-if="scope.row.eventType=== '5'">跌倒检测</span>
+              <span v-if="scope.row.eventType=== '6'">明火烟雾检测</span>
+              <span v-if="scope.row.eventType=== '7'">积水检测</span>
+              <span v-if="scope.row.eventType=== '8'">房屋渗透检测</span>
+            </template>
           </el-table-column>
           <el-table-column prop="eventDate" label="事件发生的时间"  header-align="center" align="center">
           </el-table-column>
@@ -126,6 +137,9 @@
               </el-form-item>
               <el-form-item label="事件描述" :label-width="formLabelWidth">
                   <el-input v-model="form.eventDescription" autocomplete="off" readonly></el-input>
+              </el-form-item>
+              <el-form-item label="事件图片" :label-width="formLabelWidth">
+                  <img :src="form.imageUrl" class="avatar">    
               </el-form-item>
               <el-form-item label="老年人编号" :label-width="formLabelWidth">
                   <el-input v-model="form.elderly.elderlyId" autocomplete="off" readonly></el-input>
@@ -238,6 +252,7 @@ data () {
       eventDate:'',
       eventLocation:'',
       eventDescription:'',
+      imageUrl:'',
       elderly:{}
     },
     formLabelWidth: '80px',
@@ -315,6 +330,49 @@ getInfoById (id) {
         } else {
     if (response.data.code === 1) {
       that.form = response.data.data
+      var eventId =response.data.data.eventId
+      var eventType=response.data.data.eventType
+      if(eventType=== '1'){
+          eventType='area'
+          that.form.imageUrl='https://cos-lqyrmk-1312783534.cos.ap-beijing.myqcloud.com/resources/smart_elderly_care/cv_file/img/'+eventType+'/'+eventId+'.jpg'
+      }else if(eventType=== '2'){
+        eventType='unknown'
+        that.form.imageUrl='https://cos-lqyrmk-1312783534.cos.ap-beijing.myqcloud.com/resources/smart_elderly_care/cv_file/img/'+eventType+'/'+eventId+'.jpg'
+      }else if(eventType=== '3'){
+        eventType='laugh'
+        that.form.imageUrl='https://cos-lqyrmk-1312783534.cos.ap-beijing.myqcloud.com/resources/smart_elderly_care/cv_file/img/'+eventType+'/'+eventId+'.jpg'
+      }else if(eventType=== '5'){
+        eventType='fall'
+        that.form.imageUrl='https://cos-lqyrmk-1312783534.cos.ap-beijing.myqcloud.com/resources/smart_elderly_care/cv_file/img/'+eventType+'/'+eventId+'.jpg'
+      }else if(eventType=== '4'){
+        eventType='interaction'
+        that.form.imageUrl='https://cos-lqyrmk-1312783534.cos.ap-beijing.myqcloud.com/resources/smart_elderly_care/cv_file/img/'+eventType+'/'+eventId+'.jpg'
+      }
+      if(that.form.elderly===null){
+        that.form.elderly={elderlyId:null,
+          elderlyName: null,
+          gender: null,
+          phone: null,
+          idCard: null,
+          birthday: null,
+          checkinDate: null,
+          checkoutDate:null,
+          imageUrl:null,
+          imgsetDir:null,
+          profilePhoto:null,
+          roomNumber: null,
+          firstGuardianName:null,
+          firstGuardianRelationship:null,
+          firstGuardianPhone:null,
+          firstGuardianWechat:null,
+          secondGuardianName:null,
+          secondGuardianRelationship:null,
+          secondGuardianPhone:null,
+          secondGuardianWechat:null,
+          healthState: null
+      }}
+      console.log(that.form);
+
     } else {
       that.form = {}
     }}

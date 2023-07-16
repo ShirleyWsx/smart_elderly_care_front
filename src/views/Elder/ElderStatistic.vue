@@ -92,8 +92,7 @@ export default {
             that.myChart = that.$echarts.init(that.$refs.myChart)
             that.myChart.setOption({
                 title: {
-                    text: '32469',
-                    subtext: '身体状况',
+                    text: '身体状况',
                     left: 'center',
                     top: '43%',
                     subtextStyle: {

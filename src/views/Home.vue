@@ -41,6 +41,17 @@
                   <el-table-column
                     prop="eventType"
                     label="事件类型">
+                    <template slot-scope="scope">
+              <span v-if="scope.row.eventType=== '0'">未知检测</span>
+              <span v-if="scope.row.eventType=== '1'">禁区检测</span>
+              <span v-if="scope.row.eventType=== '2'">人脸识别</span>
+              <span v-if="scope.row.eventType=== '3'">情绪识别</span>
+              <span v-if="scope.row.eventType=== '4'">交互识别</span>
+              <span v-if="scope.row.eventType=== '5'">跌倒检测</span>
+              <span v-if="scope.row.eventType=== '6'">明火烟雾检测</span>
+              <span v-if="scope.row.eventType=== '7'">积水检测</span>
+              <span v-if="scope.row.eventType=== '8'">房屋渗透检测</span>
+            </template>
                   </el-table-column>
                 </el-table>
               </div> 
@@ -53,10 +64,10 @@
             <div style="height:280px;" ref="barEcharts">{{createColumnChart()}}</div>
           </el-card>
           <div class= "num graph">
-            <el-card style="width: 34%;height: 565px;marginRight: 1%">
+            <el-card style="width: 38%;height: 565px;marginRight: 1%">
               <div style="width: 100%;height: 465px;" ref="pieEcharts">{{createPieChart()}}</div>
             </el-card>
-            <el-card style="width:65%;height: 565px"><div style="height: 265px"><el-calendar v-model="value"></el-calendar></div></el-card>
+            <el-card style="width:61%;height: 565px"><div style="height: 265px"><el-calendar v-model="value"></el-calendar></div></el-card>
           </div>
         </el-col>
       </el-row>
@@ -119,7 +130,7 @@
             });
 },
    
-createPieChart(){
+        createPieChart(){
         const that=this
         const gtoken = JSON.parse(localStorage.getItem('token')) ;
         const config = {
@@ -145,8 +156,7 @@ createPieChart(){
             that.myChart = that.$echarts.init(that.$refs.pieEcharts)
             that.myChart.setOption({
                 title: {
-                    text: '32469',
-                    subtext: '老年人的身体状况',
+                    text: '老年人的身体状况',
                     left: 'center',
                     top: '23%',
                     subtextStyle: {

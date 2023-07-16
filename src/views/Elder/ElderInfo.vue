@@ -433,7 +433,6 @@ methods: {
       this.findAll(val);
     },
 
-
 getInfoById (id) {
   const that = this;
   const gtoken = JSON.parse(localStorage.getItem('token')) 
