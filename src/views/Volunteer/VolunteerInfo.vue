@@ -51,7 +51,8 @@
           background
           layout="prev, pager, next"
           :page-size="10"
-          :total="1000">
+          :total="totalItems" 
+          :pager-count="pageCount">
       </el-pagination>
 
       <!-- 添加记录对话框 -->
@@ -257,6 +258,8 @@ data () {
 
     //分页
     pageSize:10,  //默认10条
+    totalItems:0,
+    pageCount:1,
 
     // 添加对话框
     insertDialogFormVisible: false,
@@ -313,7 +316,9 @@ methods: {
           type: 'success',
           message: '查询成功'
         });
-        that.tableData = response.data.data.records    
+        that.tableData = response.data.data.records
+        that.totalItems = response.data.data.total
+        that.pageCount = response.data.data.pages    
       }else{
         this.$message({
           type: 'error',
