@@ -55,7 +55,7 @@ export default {
               icon: 'circle',
               left: 'center',
               top: 0,
-              data: ['离职', '入职']
+              data: ['离开', '访问']
           },
           grid: {
               left: '3%',
