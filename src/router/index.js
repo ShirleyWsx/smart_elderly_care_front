@@ -17,6 +17,7 @@ import Camera from '../views/Video/Camera.vue'
 import CameraInfo from '../views/Video/CameraInfo.vue'
 import EventStatistic from '../views/Event/EventStatistic.vue'
 import CanvasArea from '../views/Video/CanvasArea.vue'
+import Home from '../views/Home.vue'
 import Hello from '../views/hello.vue'
 
 Vue.use(VueRouter)
@@ -42,8 +43,12 @@ const routes = [
     path: '/index',
     name: '后台',
     component: Index,
-    redirect: '/adminInfo',
+    redirect: '/home',
     children: [
+      {
+        path:'/home',
+        component: Home
+      },
       {
         path: '/adminInfo',
         name: '管理员信息列表',
