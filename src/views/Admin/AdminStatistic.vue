@@ -103,7 +103,7 @@ export default {
            that.lineChart = that.$echarts.init(that.$refs.lineChart)
            that.lineChart.setOption({
             title: {
-                text: '离职入职时间对比'
+                text: '离职入职人数时间对比'
             },
             // 提示框
             tooltip: {
